@@ -1,0 +1,17 @@
+version: '3.4'
+
+services:
+  notissimusoffers:
+    image: ${DOCKER_REGISTRY-}notissimusoffers
+    build:
+      context: .
+      dockerfile: NotissimusOffers/Dockerfile
+    depends_on:
+      - db
+  db:
+    image: "mcr.microsoft.com/mssql/server:2022-latest"
+    ports:
+      - "1433:1433"
+    environment:
+      SA_PASSWORD: "b1cpC4dfpl8qt6mjgY"
+      ACCEPT_EULA: "Y"
