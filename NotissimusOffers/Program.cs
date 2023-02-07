@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using NotissimusOffers.Context;
+using NotissimusOffers.Services;
 
 namespace NotissimusOffers
 {
@@ -14,6 +15,8 @@ namespace NotissimusOffers
 			builder.Services.AddDbContext<ApplicationContext>(options =>
 				options.UseSqlServer(builder.Configuration.GetConnectionString("Default"))
 			);
+			builder.Services.AddHttpClient();
+			builder.Services.AddScoped<XmlHttpRequestService>();
 
 			var app = builder.Build();
 
@@ -32,6 +35,7 @@ namespace NotissimusOffers
 
 			app.UseAuthorization();
 
+			app.UseStatusCodePages();
 			app.MapControllerRoute(
 				name: "default",
 				pattern: "{controller=Home}/{action=Index}");
